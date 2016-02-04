@@ -13,8 +13,8 @@ var Client = module.exports = function(args){
 
   this.d_name           = args.name;
   this.d_freeValue      = args.startingValue;
-  this.d_closeableValue = 0 
-  this.d_lockedValue    = 0
+  this.d_closeableValue = 0;
+  this.d_lockedValue    = 0;
   this.d_channels       = [];
   this.d_id             = _.uniqueId();  
 
@@ -23,7 +23,7 @@ var Client = module.exports = function(args){
 Client.prototype.getName = function(){
 
   return this.d_name;
-}
+};
 
 Client.prototype.toString = function(){
 
@@ -33,7 +33,7 @@ Client.prototype.toString = function(){
     "\n\tlockedValue: " + this.d_lockedValue +
     "\n\tchannels: " + this.d_channels.length +
     "\n\tid: " + this.d_id;
-}
+};
 
 Client.prototype.promiseOpenChannelTo = function(value, downstreamClient){
   return new Promise(function(accept, reject){
@@ -94,4 +94,4 @@ Client.prototype.promiseOpenChannelFrom = function(openTransaction, upstreamClie
       accept(refundTrans);      
     }
   }.bind(this));
-}
+};
