@@ -8,7 +8,7 @@ var Transaction = require('./transaction.js');
 
 var Blockchain = module.exports = function(args){
 
-	this.d_transactions = [];
+	this.d_transactions    = [];
 
 	//Set up initial genesis transactions
 	_.forEach(args.initTransactionInfos, function(transInfo){
@@ -42,21 +42,29 @@ Blockchain.prototype.getClientValue = function(client){
 	return unspentValue;
 };
 
-Blockchain.prototype.getClientChanneledValue = function(client){
-	var channeledValue = 0;
-	_.forEach(this.d_channels, function(channel){
-		if(channel.hasClient(client)){
-			channeledValue += channel.getClientValue(client);
+
+
+Blockchain.prototype.promiseProcessTransaction = function(transaction){
+	
+	if(!(transaction instanceof Transaction)){
+		throw new Error("processTransaction(Transaction t) invalid t");
+	}
+
+	return new Promise(function(accept, reject){
+		if(transaction.isValid()){
+			if(transaction.lock_time < Date.now()){
+				reject(Promise.RejectionError(
+					"Transaction is still locked. lock_time=" + 
+							transaction.lock_time));
+			}else{
+				
+			}
+		}else{
+			reject(Promise.RejectionError("Transaction is invalid"));
 		}
+
+	
 	}.bind(this));
-
-	return channeledValue;
-
-};
-
-
-
-Blockchain.prototype.processTransaction = function(transaction){
 
 
 };

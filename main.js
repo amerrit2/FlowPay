@@ -1,5 +1,6 @@
 
 
+
 //var Network = require('./network.js');
 var Logger      = require('./logger.js');
 var Transaction = require('./transaction.js');
