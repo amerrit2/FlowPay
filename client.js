@@ -4,7 +4,7 @@
 var Promise = require('bluebird');
 var _       = require('lodash');
 var Logger  = require('./logger.js');
-var Transaction = require('./transaction.js');
+var Transaction = require('./transaction/transaction.js');
 var Network     = require('./network.js');
 
 var logger = new Logger('CLIENT'); 

@@ -16,28 +16,45 @@ Logger.prototype.getTag = function(){
 
 Logger.prototype.error = function(message){
   if(verbosity >= ERROR){
-    printToConsole(message);
+    var msg = ("** " + this.d_tag + ": " + message + "\n**||||");
+    var i = 1;
+    while(i < arguments.length){
+      msg += "**\n\t" + JSON.stringify(arguments[i]); 
+      ++i;
+    }
+    msg += "\n**||||";
+    
+    
+
+  console.log(msg);
   }
 };
 Logger.prototype.debug = function(message){
   if(verbosity >= DEBUG){
-    printToConsole(message);
+    var msg = ("** " + this.d_tag + ": " + message + "|");
+    for(var i in [1, arguments.length]){
+      msg += "\n" + JSON.stringify(arguments[i]); 
+    }
+    msg += "||||";
+  
+    console.log(msg);
   }
 };
 Logger.prototype.trace = function(message){
   if(verbosity >= TRACE){
-    printToConsole(message);
+    var msg = ("** " + this.d_tag + ": " + message + "|");
+    for(var i in [1, arguments.length]){
+      msg += "\n" + JSON.stringify(arguments[i]); 
+    }
+    msg += "||||";
+  
+    console.log(msg);
   }
 };
+
 function printToConsole(message){
 
-  var msg = ("** " + this.d_tag + ": " + message + "|");
-  for(var i in [1, arguments.length]){
-    msg += "\n" + JSON.stringify(arguments[i]); 
-  }
-  msg += "||||";
-
-  console.log(msg);
+  
 };
 
 Logger.setVerbosity = function(v){

@@ -3,10 +3,10 @@
 
 //var Network = require('./network.js');
 var Logger      = require('./logger.js');
-var Transaction = require('./transaction.js');
+var Transaction = require('./transaction/transaction.js');
 var Client      = require('./client.js');
 var Blockchain  = require('./blockchain.js');
-var Lock        = require('./lock.js');
+var Lock        = require('./transaction/lock.js');
 
 Logger.setVerbosity(Logger.DEBUG);
 
@@ -14,6 +14,7 @@ var logger = new Logger('MAIN');
 
 
 var main = function(){
+  
   
 
 
@@ -39,9 +40,26 @@ var main = function(){
     ]
   });
 
+  
+  var client3 = new Client({
+    name: "client3";
+  });
+  var client4 = new Client({
+    name: "client4";
+  });
+  
+  
+  
   console.log("Client 1 value = " + blockchain.getClientValue(client1));
   console.log("Client 2 value = " + blockchain.getClientValue(client2));
-
+  console.log("Client 3 value = " + blockchain.getClientValue(client3));
+  console.log("Client 4 value = " + blockchain.getClientValue(client4));
+  
+  
+  
+  
+  
+/*
   console.log("Client 1 channeled = " + blockchain.getClientChanneledValue(client1));
   console.log("Client 2 channeled = " + blockchain.getClientChanneledValue(client2));
 
