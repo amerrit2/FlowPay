@@ -1,0 +1,49 @@
+
+
+1. Web server
+  - Keep dumb node js getting started
+  - Figure out how to run locally
+    * Question asked
+  - Make script call webserver
+  - Make webserver respond 
+  - Make Webserver talk to database
+  - Make separate service that talks to web server
+    * Messege queing?
+    * Message system?
+    * Scaling
+
+2. Front end
+  - Log in
+  - Get test information
+  - Dashboard
+    -> Time availability of funds
+      - Determined by flow-network server
+    -> Time spendability of funds 
+      - Indeterminite maybe?
+      - Depends on where you're spending
+    
+  - Actions
+    -> Background
+      - Syncronize channel model
+      - Adjust channel balance
+    -> Foreground
+      - Make payment to
+        -> displays route time and confirmation
+        -> Vendors can accept 0 conf direct payment if 
+           no instant route is found
+        -> Confirm
+      - Make withdrawal
+        -> Choose amount to withdraw
+          * Increments of time availablity 
+          * Channel closings might be delayed 
+            if counter-parties offline/uncooperative
+      
+    
+  3. Profit??
+  
+  4. Android front end
+  
+  5. Assasins
+  6. Ticketing system
+    - Doesn't necessarily need bitcoin
+      

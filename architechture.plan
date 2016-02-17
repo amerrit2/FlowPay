@@ -1,0 +1,79 @@
+
+
+
+Components
+
+ - Web UI
+    * Delivered as combo of html and javascript 
+    * Compile node project as a script.min ? 
+    * Makes requests:
+      - See data server jobs to process
+ - Web Server
+    * Fetches data for web UI ... builds into compiled(?) html+scripts+data(?)
+    * OR fetches html which include scripts which then fetch data(?) 
+    
+         -----> Communication: 
+                     * Session id assigned to script so server can cache client info
+                         -- needed? maybe not. 
+                         -- Possibly stateless
+    
+  - Data Server (The flow network server)
+    * Could be same as web server ?
+    * Fetches client information from database
+    * Contains model of network
+    * Processes jobs:
+    
+        Registration
+          - Register client
+          - Register wallet
+        
+        Handle Requests
+          - Get optimal route for (client determined) time-committed funds
+          - Notify opened channel (party a)
+             -> notify waiting (for party b)/complete
+             
+          - Notify opened channel (party b) 
+          
+             -> notify waiting (for party a)/complete
+             
+          - Get optimal route for Close/Cancel amount
+          - Notify Close/Cancel channels (party a)
+          - Notify Close/Cancel channels (party b)
+          - Get optimal Payment route 
+          - Execute route
+          - (?) Notify channel adjustment 
+                 -> Model changes when all nodes agree? 
+                 -> Some nodes agree?
+                 
+          - Get time availability of funds
+            -What is instantly available?
+            -Within the hour?
+            -Within the day?
+             
+        Push events (How to do this?)
+          - Channel adjustment requested
+            -> for a payemnt (immediate?)
+            -> for balance   (mid priority)
+            -> nodes can refuse
+          - Channel open requested
+          - Channel close requested
+        
+        
+        
+        
+  Challenges: 
+  
+  * How do you deal with nodes who are out of sync (disagree with the underlying node graph
+  model)
+    - Not provide routes for channels that are unverified/not part of the graph
+   
+  * How to guarantee clients don't end up in loops that never execute?
+    - Notify route not found?
+    
+    
+  
+  
+  
+                    
+        
+  

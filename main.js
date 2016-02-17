@@ -16,8 +16,6 @@ var logger = new Logger('MAIN');
 var main = function(){
   
   
-
-
   var client1 = new Client({
       name: "client1"
   });
@@ -26,8 +24,15 @@ var main = function(){
     name: "client2"
   });
   
+  var client3 = new Client({
+    name: "client3"
+  });
   
-  var blockchain = new Blockchain({
+  var client4 = new Client({
+    name: "client4"
+  });
+  
+  var initialTransactions = {
     initTransactionInfos: [
       {
         value: 200,
@@ -38,22 +43,44 @@ var main = function(){
         client: client2
       }
     ]
-  });
+  };
+  
+  Blockchain.initialize(initialTransactions);
+  var bc = Blockchain.get();
+  
+  
+  //1=200 2=500 3=0 4=0
+  client1.sendValue(client3,100);
+  //1=100 2=500 3=100 4=0
+ 
+  client1.sendValue(client4, 50);
+  //1=50 2=500 3=100 4=50
+  
+  client1.sendValue(client2, 25);
+  //1=25 2=525 3=100 4=50
+  
+  client2.sendValue(client3, 100);
+  //1=25 2=425 3=200 4=50
+  
+  client4.sendValue(client2, 25);
+  //1=25 2=450 3=200 4=25
+  
+  client2.sendValue(client3, 450);
+  //1=25 2=0   3=650 4=25
+  
+  client4.sendValue(client3, 25);
+  //1=25 2=0 3=675 4=0
+  
+  client3.sendValue(client1, 675);
+  //1=700 2=0 3=0 4=20
+  
+  client1.sendValue(client3, 543)
+  //1=157 2=0 3=543 4=0
 
-  
-  var client3 = new Client({
-    name: "client3";
-  });
-  var client4 = new Client({
-    name: "client4";
-  });
-  
-  
-  
-  console.log("Client 1 value = " + blockchain.getClientValue(client1));
-  console.log("Client 2 value = " + blockchain.getClientValue(client2));
-  console.log("Client 3 value = " + blockchain.getClientValue(client3));
-  console.log("Client 4 value = " + blockchain.getClientValue(client4));
+  console.log("Client 1 value = " + bc.getClientValue(client1));
+  console.log("Client 2 value = " + bc.getClientValue(client2));
+  console.log("Client 3 value = " + bc.getClientValue(client3));
+  console.log("Client 4 value = " + bc.getClientValue(client4));
   
   
   

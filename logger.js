@@ -18,36 +18,35 @@ Logger.prototype.error = function(message){
   if(verbosity >= ERROR){
     var msg = ("** " + this.d_tag + ": " + message + "\n**||||");
     var i = 1;
-    while(i < arguments.length){
-      msg += "**\n\t" + JSON.stringify(arguments[i]); 
+    while(i < (arguments.length)){
+      msg += "\n**\t" + JSON.stringify(arguments[i]); 
       ++i;
     }
     msg += "\n**||||";
-    
-    
-
-  console.log(msg);
+    console.log(msg);
   }
 };
 Logger.prototype.debug = function(message){
   if(verbosity >= DEBUG){
-    var msg = ("** " + this.d_tag + ": " + message + "|");
-    for(var i in [1, arguments.length]){
-      msg += "\n" + JSON.stringify(arguments[i]); 
+    var msg = ("** " + this.d_tag + ": " + message + "\n**||||");
+    var i = 1;
+    while(i < (arguments.length)){
+      msg += "**\n\t" + JSON.stringify(arguments[i]); 
+      ++i;
     }
-    msg += "||||";
-  
+    msg += "\n**||||";
     console.log(msg);
   }
 };
 Logger.prototype.trace = function(message){
   if(verbosity >= TRACE){
-    var msg = ("** " + this.d_tag + ": " + message + "|");
-    for(var i in [1, arguments.length]){
-      msg += "\n" + JSON.stringify(arguments[i]); 
+    var msg = ("** " + this.d_tag + ": " + message + "\n**||||");
+    var i = 1;
+    while(i < (arguments.length)){
+      msg += "**\n\t" + JSON.stringify(arguments[i]); 
+      ++i;
     }
-    msg += "||||";
-  
+    msg += "\n**||||";
     console.log(msg);
   }
 };

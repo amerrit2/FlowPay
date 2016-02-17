@@ -6,6 +6,9 @@ var _       = require('lodash');
 var Logger  = require('./logger.js');
 var Transaction = require('./transaction/transaction.js');
 var Network     = require('./network.js');
+var Blockchain  = require('./blockchain.js');
+var Lock        = require("./transaction/lock.js");
+var OutPoint    = require("./transaction/outpoint.js");
 
 var logger = new Logger('CLIENT'); 
 
@@ -33,6 +36,63 @@ Client.prototype.toString = function(){
     "\n\tlockedValue: " + this.d_lockedValue +
     "\n\tchannels: " + this.d_channels.length +
     "\n\tid: " + this.d_id;
+};
+
+Client.prototype.sendValue = function(to, amount){
+  
+  var bc = Blockchain.get();
+  if(bc.getClientValue(this) >= amount){
+    
+    var outPoints        = bc.getUnspentsOutPoints(this),
+        outPointsToSpend = [],
+        outValue         = 0;
+        
+    _.forEach(outPoints, function(outPoint){
+      outPointsToSpend.push((outPoint));
+      outValue += outPoint.getValue();
+      if(outValue >= amount){
+        return false; //force exit
+      }
+    }.bind(this));
+    
+  /*  logger.debug("total outs: " + outPoints.length + 
+      " | needed to spend: " + outPointsToSpend.length);*/
+    
+    var txOuts = [new OutPoint({
+      value: amount,
+      lock: new Lock({clients: [to]})
+    })];
+    
+    //Spend change back
+    if(outValue > amount){
+      txOuts.push(new OutPoint({
+        value: (outValue - amount),
+        lock: new Lock({clients: [this]})
+      }));
+    }
+    
+    //Create transaction
+    var tran = new Transaction({
+      tx_ins: outPointsToSpend,
+      tx_outs: txOuts,
+      lock_time: null
+    });
+    
+    //send to blockchain
+    bc.promiseProcessTransaction(tran)
+    .then(function(){
+      logger.debug("Transaction processed!");
+    })
+    .error(function(error){
+      logger.error("Failed to process transaction. error=" + error.message);
+    });
+    
+    
+  }else{
+    
+    logger.error("Client does not have enough value to send.");
+  }
+  
 };
 
 Client.prototype.promiseOpenChannelTo = function(value, downstreamClient){
